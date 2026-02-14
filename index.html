@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Princess</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff69b4, #ffb6c1, #ffe4e1);
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,105,180,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: 0.8s;
+}
+
+.overlay h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3em;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.buttons { display: flex; gap: 20px; }
+
+.btn {
+    padding: 15px 30px;
+    font-size: 1.3em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-yes {
+    background: linear-gradient(45deg,#ff1493,#dc143c);
+    color: white;
+}
+
+.btn-yes:hover { transform: scale(1.1); }
+
+.btn-no { background: #ccc; }
+
+/* Main Content */
+.main-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.main-content h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.main-content img {
+    max-width: 300px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.text-container {
+    max-width: 700px;
+    background: rgba(255,255,255,0.15);
+    padding: 20px;
+    border-radius: 15px;
+    color: white;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+button.play {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px;
+    background: #ff1493;
+    color: white;
+    cursor: pointer;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: fall 6s linear infinite;
+}
+
+@keyframes fall {
+    0% {transform: translateY(-100vh);}
+    100% {transform: translateY(100vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay">
+    <h1>Hari Valentine 💖</h1>
+    <div class="buttons">
+        <button class="btn btn-no" id="btnNo">No</button>
+        <button class="btn btn-yes" id="btnYes">Yes</button>
+    </div>
+</div>
+
+<div class="main-content" id="mainContent">
+    <h1>💖 My Princess 💖</h1>
+    <img src="princess.jpg" alt="My Princess">
+    <div class="text-container">
+        <p>Kamu adalah cahaya dalam hidupku. Aku mencintaimu lebih dari segalanya 💖</p>
+        <p>Happy Valentine sayang 🤍 Terima kasih sudah bertahan dan selalu memilih aku setiap hari.</p>
+        <p>Semoga kita tetap bersama bukan cuma hari ini, tapi selamanya 🤍💐</p>
+        <p>#Fajriimup 🦖</p>
+    </div>
+    <button class="play" onclick="playMusic()">Putar Musik Cinta 🎵</button>
+</div>
+
+<script>
+const overlay = document.getElementById('overlay');
+const mainContent = document.getElementById('mainContent');
+const btnYes = document.getElementById('btnYes');
+const btnNo = document.getElementById('btnNo');
+
+let audio = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+audio.loop = true;
+
+/* Tombol No kabur */
+btnNo.addEventListener('mouseover', () => {
+    const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
+    const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
+    btnNo.style.position = "absolute";
+    btnNo.style.left = x + "px";
+    btnNo.style.top = y + "px";
+});
+
+/* Klik Yes */
+btnYes.addEventListener('click', () => {
+    overlay.style.opacity = "0";
+    setTimeout(() => {
+        overlay.style.display = "none";
+        mainContent.style.display = "flex";
+        confettiEffect();
+        audio.play(); // auto play setelah klik yes
+    }, 800);
+});
+
+/* Tombol Play */
+function playMusic(){
+    audio.play();
+}
+
+/* Confetti */
+function confettiEffect() {
+    for(let i=0;i<60;i++){
+        const conf = document.createElement("div");
+        conf.innerHTML = "💖";
+        conf.style.position = "absolute";
+        conf.style.left = Math.random()*100+"vw";
+        conf.style.top = "-20px";
+        conf.style.fontSize = Math.random()*20+15+"px";
+        conf.style.animation = "fall 3s linear";
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),3000);
+    }
+}
+
+/* Hearts Rain */
+setInterval(()=>{
+    const heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+},500);
+</script>
+
+</body>
+</html>
+
+
